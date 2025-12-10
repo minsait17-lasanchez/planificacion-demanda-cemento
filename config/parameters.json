@@ -1,0 +1,80 @@
+{    
+    "variables_generales": {
+        "DATASET_DDV_ID": "cp_ddv_0400",
+        "COLUMNA_AGRUPACION_MES": "MES"
+    },
+
+    "variables_informativas": {
+        "TIPO_PRODUCTO_LOG": "Cemento",
+        "TIPO_PRODUCTO_TABLA": "CEMENTO",
+        "TIPO_MODELO_ML": "CHRONOS BOLT AMAZON",
+        "TIPO_MODELO_SIMPLE": "MEDIA MOVIL",
+        "TIPO_MODELO_0": "PROYECCION A 0"
+    },
+
+    "variables_input_demanda_comercial": {
+        "TABLA": "F_CONSUMOMENSUALPT_DEMANDA",
+        "CANTIDAD": "CTDCONSUMO",
+        "FECHA": "FECHA",
+        "CLASIFICACION": "CLASIFICACION",
+        "SOCIEDAD": "CODSOCIEDAD",
+        "CENTRO": "CODCENTRO",
+        "MATERIAL": "CODMATERIAL",
+        "MEDIDA": "CODUNIDADMEDIDABASE",
+        "FECHA_ULTIMO_CONSUMO": "FECULTIMOCONSUMO"
+    },
+
+    "variables_input_skus_analizados": {
+        "RUTA_ARCHIVO": "planificacion_demanda_comercial/evalmetrics_202505.xlsx",
+        "HOJA_ARCHIVO": "analizados"
+    },
+
+    "variables_modelos_ml": {
+        "REGION": "us-east1",
+        "NOMBRE": "Modelo_Cemento_Alta_Baja_Rotacion_18Meses_Forecasting",
+        "IDENTIFICADOR_VERSION": "train_month",
+        "PREFIX_GCS": "planificacion_demanda_comercial/modelo_cemento_alta_baja_rotacion_18meses_forecasting"
+    },
+
+    "variables_modelos_autogluon": {
+        "NOMBRE": "Chronos",
+        "RUTA_AUTOGLUON": "bolt_base",
+        "SUFIJO": "ZeroShot",
+        "METRICA_EVALUACION": "MAE",
+        "TIEMPO_ENTRENAMIENTO_MAX": 3600
+    },
+
+
+    "variables_output_proyeccion_demanda": {
+        "TABLA": "PROYECCION_DEMANDA_COMERCIAL",
+        "PERIODO": "PERIODOSEGMENTACION"
+    },
+
+    "variables_output_monitoreo_demanda": {
+        "TABLA": "MONITOREO_PROYECCION_DEMANDA_COMERCIAL",
+        "PERIODO": "PERIODOSEGMENTACION"
+    },
+
+    "variables_rangos_meses": {
+        "SEGMENTACION": 30,
+        "HISTORICO": 36,
+        "PROYECCION": 18,
+        "VENTAS": 12 
+    },
+
+    "variables_umbrales_segmentacion": {
+        "ABC_INFERIOR": 0.80,
+        "ABC_SUPERIOR": 0.95,
+        "XYZ_INFERIOR": 0.35,
+        "XYZ_SUPERIOR": 0.80,
+        "FSN_INFERIOR": 2,
+        "FSN_SUPERIOR": 6,
+        "R_INFERIOR": 32,
+        "R_SUPERIOR": 90,
+        "F_INFERIOR": 0.5,
+        "F_SUPERIOR": 1
+    },
+
+    "tables": [
+    ]
+}

@@ -1,0 +1,39 @@
+trigger: 
+  branches:
+    include: 
+    - feature/*
+    - master
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      ref: master
+      name: RP-AZ-ARQ-FRAMEWORK/PIPELINES_TEMPLATES
+
+extends:
+  template: workflow-templates\cloud-run-job-deploy.yaml@templates
+
+  parameters:
+    container_image_name: $(SVYAML_COMPONENT_JOB_CONTAINER_NAME)
+    artifact_region_url: $(SVYAML_DEPLOY_REGION)-docker.pkg.dev
+
+    environment_dev: 'DEVELOPMENT'
+    gcp_project_name_dev: 'pe-pacasmayo-dat-01rdv-gcp-dev'
+    sc_gcp_container_registry_name_dev: 'gcr-artifact-registry-com-dev'
+    gcp_artifact_registry_name_dev: 'com-docker-registry-dev'
+    gcp_secure_file_dev: 'pe-pacasmayo-dat-01prc-gcp-privatekey-dev.json'
+
+    environment_qas: 'TRAINING'
+    gcp_project_name_qas: 'pe-pacasmayo-dat-01rdv-gcp-qas'
+    sc_gcp_container_registry_name_qas: 'gcr-artifact-registry-com-qas'
+    gcp_artifact_registry_name_qas: 'com-docker-registry-qas'
+    gcp_secure_file_qas: 'pe-pacasmayo-dat-01prc-gcp-privatekey-qas.json'
+
+    environment_prd: 'PRODUCTION'
+    gcp_project_name_prd: 'pe-pacasmayo-dat-01rdv-gcp-prd'
+    sc_gcp_container_registry_name_prd: 'gcr-artifact-registry-com-prd'
+    gcp_artifact_registry_name_prd: 'com-docker-registry-prd'
+    gcp_secure_file_prd: 'pe-pacasmayo-dat-01prc-gcp-privatekey-prd.json'
+  
+  

@@ -1,0 +1,41 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: $(SVYAML_COMPONENT_JOB_NAME)
+  labels:
+    cloud.googleapis.com/location: $(SVYAML_DEPLOY_REGION)
+  annotations:
+    #run.googleapis.com/launch-stage: LAUNCH_STAGE
+    #run.googleapis.com/binary-authorization: POLICY
+    #run.googleapis.com/binary-authorization-breakglass: JUSTIFICATION
+spec:
+  template:
+    metadata:
+      annotations:
+        # run.googleapis.com/cloudsql-instances: $(SVYAML_COMPONENT_JOB_CLOUD_SQL_CONNECTION)
+        run.googleapis.com/vpc-access-connector: projects/pe-pacasmayo-networking-prd/locations/us-east1/connectors/conn-serverless-data-prd
+        # run.googleapis.com/vpc-access-connector: projects/pe-pacasmayo-dat-01rdv-gcp-dev/locations/us-east1/connectors/pe-pacasmayo-net-conector        
+        # run.googleapis.com/vpc-access-egress: EGRESS
+        #run.googleapis.com/network-interfaces: VPC_NETWORK_SETTINGS_IN_JSON
+        #run.googleapis.com/encryption-key: CMEK
+    spec:
+      #serviceAccountName: sa-segmentacion@pe-pacasmayo-cds-01anl-gcp-dev.iam.gserviceaccount.com
+      parallelism: $(SVYAML_COMPONENT_JOB_PARALLELISM)
+      taskCount: $(SVYAML_COMPONENT_JOB_TASK_COUNT)
+      template:
+        spec:
+          maxRetries: 0
+          timeoutSeconds: 3600
+          containers:
+          - image: $(SVYAML_DEPLOY_REGION)-docker.pkg.dev/$(GCP_PROJECT_ID_RDV)/$(SVYAML_REGISTRY_NAME)/$(SVYAML_COMPONENT_JOB_CONTAINER_NAME):$(Build.BuildId) 
+            env:
+            - name: PROJECT_DDV_ID
+              value: '$(GCP_PROJECT_ID_DDV_04)'
+            - name: PROJECT_ANL_ID
+              value: '$(GCP_PROJECT_ID_ANL_01)'
+            - name: BUCKET_ANL_ID
+              value: '$(GCP_BUCKET_ID_ANL_01)'
+            resources:
+              limits:
+                cpu: $(SVYAML_COMPONENT_JOB_CPU_LIMIT)
+                memory: $(SVYAML_COMPONENT_JOB_MEMORY_LIMIT)
